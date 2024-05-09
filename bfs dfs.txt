@@ -1,0 +1,117 @@
+#include <bits/stdc++.h>
+#include <iostream>
+
+using namespace std;
+
+int n = 5;
+vector<vector<int>> v = {
+    {0,1,1,0,1},
+    {1,0,1,0,0},
+    {1,1,0,1,1},
+    {0,0,1,0,0},
+    {1,0,1,0,0},
+};
+
+
+void setGraphSize(int n){
+    v.resize(n);
+    for(int i=0; i<n; i++){
+        v[i].resize(n);
+    }
+}   // setGraphSize()
+
+void printGraph(){
+    
+    
+    cout<<"\nGraph is : ";
+    for(int i=0; i<v.size(); i++){
+        cout<<"\n";
+        for(int j=0; j<v[i].size(); j++){
+            cout<<v[i][j]<<" ";
+        }   // for - j
+    }   // for - i
+    
+    
+}   // printGraph()
+
+
+
+void getEdges(){
+    
+    int e;
+    cout<<"\nEnter edge count : ";
+    cin>>e;
+    
+    for(int i=0; i<e; i++){
+        int x, y;
+        cout<<"\nEnter connecting nodes for edge "<<(i+1)<<" : ";
+        cin>>x>>y;
+        
+        v[x-1][y-1] = 1;
+        v[y-1][x-1] = 1;
+        
+    }   // for - i
+    
+}   // getEdges()
+
+
+void dfs(int start){
+    
+    vector<bool> visited(5, false);
+    visited[start] = true;
+    
+    queue<int> st;
+    st.push(start);
+    
+    while(!st.empty()){
+        
+        int t = st.front();
+        st.pop();
+        
+        cout<<"\nVisited "<<t;
+        
+        // visited[t] = true;
+        
+        // for(int i : v[t]){
+        //     cout<<"\nTraversing "<<i;
+        //     // cout<<"\nTrying v["<<t<<"]["<<i<<"] and it is "<<i;
+        //     if(visited[i] == false){
+        //         visited[i] = true;
+        //         st.push(i);
+        //         cout<<"\nPushed "<<i;
+        //     }   // if
+        // }   // for : i
+        
+        for(int i = 0; i<v[t].size(); i++){
+            // cout<<"\nTraversing "<<i;
+            if(v[t][i] && !visited[i]){
+                // visited[v[t][i]] = true;
+                visited[i] = true;
+                st.push(i);
+                // cout<<"\nPushed "<<v[t][i];
+            }   // if
+        }   // for - i
+        
+        
+    }   // while()
+    
+}   // dfs()
+
+
+int main()
+{
+    
+    // setGraphSize(5);
+    // printGraph();
+    
+    // getEdges();
+    
+    printGraph();
+    
+    dfs(0);
+    
+    
+    cout<<"\n\nHello World";
+
+    return 0;
+}

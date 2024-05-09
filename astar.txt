@@ -1,0 +1,97 @@
+#include <bits/stdc++.h>
+#include <iostream>
+
+using namespace std;
+
+
+int main()
+{
+    int n = 10;
+    
+    vector<vector<int>> v = {
+        {0,6,0,0,0,3,0,0,0,0},
+        {6,0,3,2,0,0,0,0,0,0}, 
+        {0,3,0,1,5,0,0,0,0,0}, 
+        {0,2,1,0,8,0,0,0,0,0}, 
+        {0,0,5,8,0,0,0,0,5,5}, 
+        {3,0,0,0,0,0,1,7,0,0}, 
+        {0,0,0,0,0,1,0,0,3,0},
+        {0,0,0,0,0,7,0,0,2,0}, 
+        {0,0,0,0,5,0,3,0,0,3}, 
+        {0,0,0,0,5,0,0,0,3,0},
+    };
+    
+    vector<int> h = { 10, 8, 5, 7, 3, 6, 5, 3, 2, INT_MIN };
+    
+    
+    
+    vector<bool> visited(n, false);
+    stack<int> st;
+    
+    st.push(0);
+    // visited[0] = true;
+    
+    vector<int> path;
+    bool flag = false;
+    int target = 3;
+    
+    while(!st.empty()){
+        
+        
+        int top = st.top();
+        path.push_back(top);
+        if(top==target){ flag=true; break; }
+        
+        visited[top] = true;
+        st.pop();
+        cout<<"\n-------> Visited "<<top;
+        
+        
+        
+        
+        
+        int mini = -1, minval = INT_MAX;
+        
+        
+        
+        for(int i=0; i<n; i++){
+            
+            
+            cout<<"\nLooking at v["<<top<<"]["<<i<<"] which is : "<<v[top][i];
+            
+            if( v[top][i]!=0 && visited[i]!=true ){
+                if( v[top][i] < minval ){
+                    minval = v[top][i] + h[i];
+                    mini = i;
+                    cout<<"\nNow, the minimum is : v["<<top<<"]["<<i<<"] i.e : "<<v[top][i];
+                }   // if
+            }   // if
+            
+            
+        }   // for - i
+        
+        
+        
+        
+        if(mini!=-1){
+            st.push(mini);
+        }   // if
+        
+    }   // while
+    
+    
+    if(flag==true){
+        cout<<"\nPath to "<<target<<" is : \n";
+        for(int i : path){
+            cout<<" "<<i<<" -> ";
+        }   // for : i
+    }   // if
+    else{
+        cout<<"\nTarget "<<target<<" not reachable !";
+    }
+    
+    
+    cout<<"\n\nHello World";
+
+    return 0;
+}

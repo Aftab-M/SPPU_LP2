@@ -1,0 +1,87 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <bits/stdc++.h>
+#define m INT_MAX
+using namespace std;
+
+
+
+struct Edge {
+    int src, dest, weight;
+};
+
+int main() {
+    vector<vector<int>> adjMatrix = {
+        {m, 5, 10, m},
+        {5, m, 4, 11}, 
+        {10, 4, m, 5}, 
+        {m, 11, 5, m},
+    };
+    
+    int V = adjMatrix.size();
+    
+    vector<Edge> edges; // Store edges
+
+    // Populate edges from adjacency matrix
+    for (int i = 0; i < V; ++i) {
+        for (int j = i + 1; j < V; ++j) {
+            if (adjMatrix[i][j] != m) {
+                Edge e;
+                e.src = i;
+                e.dest = j;
+                e.weight = adjMatrix[i][j];
+                edges.push_back(e);
+            }
+        }
+    }
+
+    sort(edges.begin(), edges.end(), [](const Edge& a, const Edge& b) { return a.weight < b.weight; });
+
+
+    vector<int> parent(V, -1); // Parent array to store the parent of a vertex
+   
+    vector<pair<int, int>> result; // To store the resultant MST
+   
+    int totalWeight = 0;
+
+    int edgeCount = 0;
+   
+   
+    for (int i = 0; i < edges.size(); ++i) {
+        
+        
+        int src = edges[i].src;
+        int dest = edges[i].dest;
+        int weight = edges[i].weight;
+
+        int x = src;
+        int y = dest;
+
+        // If including this edge does't cause cycle, include it in result
+        while (parent[x] != -1) x = parent[x];
+        while (parent[y] != -1) y = parent[y];
+        if (x != y) {
+            result.push_back({src, dest});
+            totalWeight += weight;
+            parent[x] = y;
+            edgeCount++;
+        }
+
+        // Check if MST is completed
+        if (edgeCount == V - 1)
+            break;
+            
+            
+    }   // for - i
+
+    // Print the edges of MST
+    cout << "Minimum Spanning Tree using Kruskal's Algorithm:\n";
+    for (int i = 0; i < result.size(); ++i) {
+        cout << "Edge from " << result[i].first << " to " << result[i].second << " with cost: " << adjMatrix[result[i].first][result[i].second] << endl;
+    }
+
+    cout << "Total Cost: " << totalWeight << endl;
+
+    return 0;
+}

@@ -1,0 +1,164 @@
+#include <bits/stdc++.h>
+#include <iostream>
+
+using namespace std;
+
+struct process{
+    int id, at, bt, tt, wt, rt;
+};
+
+int main()
+{
+    
+    int n = 5;
+    vector<process> pr(n);
+    
+    for(int i=0; i<n; i++){
+        int at, bt;
+        cout<<"\nEnter arrival and burst time : ";
+        // cin>>at>>bt;
+        cin>>bt;
+        // pr[i].at = at;
+        pr[i].bt = bt;
+        pr[i].id = i+1;
+    }   // for - i
+    
+    
+    
+    
+    // FCFS
+    
+    
+    
+    // cout<<"ID\tAT\tBT\n";
+    // for(int i=0; i<n; i++){
+    //     cout<<endl<<pr[i].id<<"\t"<<pr[i].bt<<"\t"<<pr[i].at;
+    // }   // for - i
+    
+    
+    // pr[0].wt = 0;
+    // for(int i=1; i<n; i++){
+    //     pr[i].wt = pr[i-1].wt + pr[i-1].bt;
+    // }   // for - i
+    
+    // for(int i=0; i<n; i++){
+    //     pr[i].tt = pr[i].wt + pr[i].bt;
+    // }
+    
+    
+    // cout<<"\nID\tWT\tTT";
+    // for(int i=0; i<n; i++){
+    //     cout<<endl<<pr[i].id<<"\t"<<pr[i].wt<<"\t"<<pr[i].tt;
+    // }   // for - i
+    
+    
+    
+    
+    
+    
+    
+    // SJF
+    
+    
+    
+    // for(int i=0; i<n-1; i++){
+    //     for(int j=i+1; j<n; j++){
+    //         if(pr[i].bt > pr[j].bt){
+    //             swap(pr[i], pr[j]);
+    //         }
+    //     }   // for - j
+    // }   // for - i
+    
+    
+    // cout<<"\nSorted burst times : ";
+    // for(int i=0; i<n; i++){
+    //     cout<<" "<<pr[i].bt;
+    // }   // for - i
+    
+    
+    // pr[0].wt = 0;
+    
+    // for(int i=1; i<n; i++){
+    //     pr[i].wt = pr[i-1].wt + pr[i-1].bt;
+    // }   // for - i
+    
+    // for(int i=0; i<n; i++){
+    //     pr[i].tt = pr[i].wt + pr[i].bt;
+    // }   // for - i
+    
+    
+    
+    // cout<<"\nID\tWT\tTT";
+    // for(int i=0; i<n; i++){
+    //     cout<<endl<<pr[i].id<<"\t"<<pr[i].wt<<"\t"<<pr[i].tt;
+    // }   // for - i
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    // ROUND ROBIN
+    
+    
+    
+    int qt = 3;
+    
+    vector<int> rt(n);
+    
+    for(int i = 0; i<n; i++){
+        pr[i].rt = pr[i].bt;
+    }   // for - i
+    
+    
+    
+    vector<int> pp(n);
+    for(int i=0; i<n; i++){
+        pp[i] = pr[i].bt;
+    }   // for - i
+    
+    
+    int sum = 0, currtime = 0;
+    bool alldone = false;
+    while(!alldone){
+        alldone = true;
+        
+        for(int i=0; i<n; i++){
+            
+            if(pr[i].bt > 0){
+                alldone = false;
+                int etime = min(qt, pr[i].bt);
+                pr[i].bt -= etime;
+                pr[i].wt += currtime - pr[i].tt;
+                currtime += etime;
+                pr[i].tt += currtime;
+            }   // if
+            
+        }   // for - i
+    }
+
+
+    // for(int i=0; i<n; i++){
+    //     pr[i].tt = pr[i].wt + pp[i];
+    // }   // for - i
+    
+    
+    
+    
+    cout<<"\nID\tWT\tTT";
+    for(int i=0; i<n; i++){
+        cout<<endl<<pr[i].id<<"\t"<<pr[i].wt<<"\t"<<pr[i].tt;
+    }   // for - i
+    
+    
+    
+    
+    
+    cout<<"\n\nHello World";
+
+    return 0;
+}
