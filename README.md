@@ -1,6 +1,6 @@
 
 ## Prerequisites
-    | C++ Execution Environment | JDK | Python |
+| C++ Execution Environment | JDK | Python |
 Once you have installed the necessary dependencies, simply open and run practicals as needed. Each script is named according to the practical it represents.
 
 ## Contributing
