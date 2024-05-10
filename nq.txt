@@ -1,0 +1,118 @@
+#include <bits/stdc++.h>
+#include <iostream>
+
+using namespace std;
+
+int n;
+
+void printSolution(vector<vector<int>>& v){
+    
+    for(int i=0; i<n; i++){
+        cout<<endl;
+        for(int j=0; j<n; j++){
+            
+            if(v[i][j]==1){
+                cout<<"X ";
+            }   // if
+            else{
+                cout<<"_ ";
+            }   // else
+            
+        }   // for - j
+        
+    }   // for - i
+    
+    
+}   // printSolution()
+
+
+bool isSafe(vector<vector<int>>& v, int row, int col){
+    
+    int i, j;
+    
+    for(i=0; i<col; i++){
+        if(v[row][i])
+            return false;
+    }   // for - i
+    
+    
+    for(int i=row, j=col; i>=0 && j >= 0; i--, j--){
+        if(v[i][j])
+            return false;
+    }   // for - i, j
+    
+    
+    for(i=row, j=col; i<n && j>=0; i++,j--){
+        if(v[i][j])
+            return false;
+    }   // for - i, j
+    
+    
+    return true;
+    
+    
+    
+}   // isSafe()
+
+
+bool solve(vector<vector<int>>& v, int col){
+    
+    if(col>=n){ return true; }
+    
+    for(int i=0; i<n; i++){
+        
+        if(isSafe(v, i, col)){
+            
+            v[i][col] = 1;
+            
+            if(solve(v, col+1)) return true;
+            
+            v[i][col] = 0;
+            
+        }   // if
+        
+        printSolution(v);
+        
+    }   // for - i
+    
+    return false;
+    
+}   // solve()
+
+
+
+int main(){
+    
+    cout<<"\nEnter n : ";
+    cin>>n;
+    
+    
+    vector<vector<int>> v;
+    
+    for(int i=0; i<n; i++){
+        vector<int> vt(n, 0);
+        v.push_back(vt);
+    }   // for - i
+    
+    
+    if(solve(v, 0) == false){ cout<<"\nSolution does not exist !"; }
+    else{
+        cout<<"\nThe Final Solution is : ";
+        printSolution(v);
+    }
+    
+    // printSolution(v);
+    
+    
+    
+    
+    
+    cout<<"\n\nHello World";
+
+    return 0;
+}
+
+
+
+
+

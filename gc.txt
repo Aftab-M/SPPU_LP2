@@ -1,0 +1,92 @@
+#include <bits/stdc++.h>
+#include <stdio.h>
+using namespace std;
+
+vector<vector<int>> graph = {
+    {0,1,1,0,0}, 
+    {1,0,0,1,0}, 
+    {1,0,0,0,1}, 
+    {0,1,0,0,1}, 
+    {0,0,1,1,0},
+};
+
+map<int, string> cols;
+
+int V = graph.size();
+
+
+
+bool isSafe(vector<int> colors, int color, int v){
+    
+    for(int i=0; i<V; i++){
+        if(graph[v][i] && color == colors[i])
+            return false;
+    }   // for - i
+    
+    return true;
+    
+}   // isSafe()
+
+
+
+bool colorGraph(vector<int>& colors, int n, int v){
+    
+    if(v==V) return true;
+    
+    for(int c=1; c<=n; c++){
+        if(isSafe(colors, c, v)){
+            colors[v] = c;
+            if(colorGraph(colors, n, v+1)){
+                return true;
+            }   // if
+            colors[v] = 0;
+        }   // if
+    }   // for - c
+    
+    return false;
+    
+    
+}   // colorGraph()
+
+
+
+
+void graphColor(int n){
+    
+    vector<int> colors(V, 0);
+    
+    if(!colorGraph(colors, n, 0)){
+        cout<<"\nThe solution for this graph is not possible with n = "<<n;
+    }   // if
+    else{
+        
+        cout<<"\nVertex\tColor";
+        for(int i=0; i<V; i++){
+            cout<<endl<<i<<"\t"<<cols[colors[i]];
+        }   // for - i
+        
+    }   // else
+    
+}   // graphColor()
+
+
+
+
+int main()
+{
+
+    cols[0] = "white";
+    cols[1] = "black";
+    cols[2] = "blue";
+    cols[3] = "green";
+
+    int n = 7;
+    
+    graphColor(n);
+    
+    
+    cout<<"\nHello World !!";
+
+    return 0;
+}
+
